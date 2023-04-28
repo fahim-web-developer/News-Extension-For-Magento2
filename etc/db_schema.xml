@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+  <table name="acme_fahimnews_post" resource="default" engine="innodb" comment="News Table">
+    <column xsi:type="int" name="newspost_id" padding="11" unsigned="false" nullable="false" identity="true" comment="News Post ID"/>
+    <column xsi:type="varchar" name="title" nullable="false" length="255" comment="Title"/>
+    <column xsi:type="varchar" name="url_key" nullable="false" length="255" comment="URL key"/>
+    <column xsi:type="mediumtext" name="content" nullable="false" comment="Content"/>
+    <column xsi:type="mediumtext" name="short_content" nullable="false" comment="Short Content"/>
+    <column xsi:type="varchar" name="image" nullable="false" length="255" comment="Featured Image"/>
+    <column xsi:type="varchar" name="source_edition" nullable="true" length="255" comment="Source edition"/>
+    <column xsi:type="varchar" name="image_thumb" nullable="false" length="255" comment="Thumb Image"/>
+    <column xsi:type="varchar" name="category" nullable="false" length="255" comment="category"/>
+    <column xsi:type="text" name="tags" nullable="false" comment="Tags"/>
+    <column xsi:type="mediumtext" name="meta_title" nullable="false" comment="Meta Keywords"/>
+    <column xsi:type="mediumtext" name="meta_keywords" nullable="false" comment="Meta Keywords"/>
+    <column xsi:type="text" name="meta_description" nullable="false" comment="Meta Description"/>
+    <column xsi:type="date" name="publish_date" comment="Publish Date"/>
+    <column xsi:type="smallint" name="is_active" padding="6" unsigned="false" nullable="true" identity="false" comment="Active Status"/>
+    <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" onCreate="migrateDataFrom(created_at)"/>
+    <column xsi:type="timestamp" name="update_time" on_update="true" nullable="false" default="0" onCreate="migrateDataFrom(update_time)"/>
+    <column xsi:type="int" name="views" padding="11" unsigned="false" nullable="false" identity="false" comment="Views"/>
+    <column xsi:type="varchar" name="store_id" nullable="false" length="255" comment="Store ID"/>
+    <column xsi:type="text" name="type" nullable="true" comment="Post Type"/>
+    <column xsi:type="int" name="parent_id" padding="11" unsigned="false" nullable="false" identity="false" default="0" comment="Revision Type Parent Id"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="newspost_id"/>
+    </constraint>
+  </table>
+  <table name="acme_fahimnews_comment" resource="default" engine="innodb" comment="Comments Table">
+    <column xsi:type="int" name="comment_id" padding="11" unsigned="false" nullable="false" identity="true" comment="Comment ID"/>
+    <column xsi:type="int" name="newspost_id" padding="11" unsigned="false" nullable="false" identity="false" comment="News Post ID"/>
+    <column xsi:type="varchar" name="comment" nullable="false" length="255" comment="Comment"/>
+    <column xsi:type="varchar" name="sender_name" nullable="false" length="255" comment="Name"/>
+    <column xsi:type="varchar" name="sender_email" nullable="false" length="255" comment="Email"/>
+    <column xsi:type="date" name="commented_date" comment="Commented Date"/>
+    <column xsi:type="smallint" name="comment_status" padding="6" unsigned="false" nullable="true" identity="false" comment="Comment Status"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="comment_id"/>
+    </constraint>
+    <constraint xsi:type="foreign" referenceId="FK_9F4D0511B447C5498C4BC228F807137A" table="acme_fahimnews_comment" column="newspost_id" referenceTable="acme_fahimnews_post" referenceColumn="newspost_id" onDelete="CASCADE"/>
+    <index referenceId="ACME_FAHIMNEWS_COMMENTS_NEWSPOST_ID" indexType="btree">
+      <column name="newspost_id"/>
+    </index>
+  </table>
+  <table name="acme_fahimnews_post_relatedproduct" resource="default" engine="innodb" comment="Acme FahimNews Post To Product Relation Table">
+    <column xsi:type="int" name="newspost_id" padding="11" unsigned="false" nullable="false" identity="false" comment="Post ID"/>
+    <column xsi:type="int" name="related_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Related Product ID"/>
+    <column xsi:type="int" name="position" padding="11" unsigned="false" nullable="false" identity="false" comment="Position"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="newspost_id"/>
+      <column name="related_id"/>
+    </constraint>
+    <constraint xsi:type="foreign" referenceId="FK_9D13AA9087D0EF4D63DCA92A82FA221C" table="acme_fahimnews_post_relatedproduct" column="newspost_id" referenceTable="acme_fahimnews_post" referenceColumn="newspost_id" onDelete="CASCADE"/>
+    <constraint xsi:type="foreign" referenceId="ACME_FAHIMNEWS_POST_RELATEDPRD_RELATED_ID_CAT_PRD_ENTT_ENTT_ID" table="acme_fahimnews_post_relatedproduct" column="related_id" referenceTable="catalog_product_entity" referenceColumn="entity_id" onDelete="CASCADE"/>
+    <index referenceId="ACME_FAHIMNEWS_POST_RELATEDPRODUCT_RELATED_ID" indexType="btree">
+      <column name="related_id"/>
+    </index>
+  </table>
+  <table name="acme_fahimnews_post_relatedpost" resource="default" engine="innodb" comment="Acme FahimNews Post To Post Relation Table">
+    <column xsi:type="int" name="newspost_id" padding="11" unsigned="false" nullable="false" identity="false" comment="Post ID"/>
+    <column xsi:type="int" name="related_id" padding="11" unsigned="false" nullable="false" identity="false" comment="Related Post ID"/>
+    <column xsi:type="int" name="position" padding="11" unsigned="false" nullable="false" identity="false" comment="Position"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="newspost_id"/>
+      <column name="related_id"/>
+    </constraint>
+    <constraint xsi:type="foreign" referenceId="FK_A20A734FD07A69AC1DCEE20D88E14105" table="acme_fahimnews_post_relatedpost" column="newspost_id" referenceTable="acme_fahimnews_post" referenceColumn="newspost_id" onDelete="CASCADE"/>
+    <constraint xsi:type="foreign" referenceId="FK_D4643DB76695C3641CB6CC3C5A6E3B6B" table="acme_fahimnews_post_relatedpost" column="newspost_id" referenceTable="acme_fahimnews_post" referenceColumn="newspost_id" onDelete="CASCADE"/>
+    <index referenceId="ACME_FAHIMNEWS_POST_RELATEDPOST_RELATED_ID" indexType="btree">
+      <column name="related_id"/>
+    </index>
+  </table>
+  <table name="acme_fahimnews_category" resource="default" engine="innodb" comment="Category Table">
+    <column xsi:type="int" name="cat_id" padding="11" unsigned="false" nullable="false" identity="true" comment="Category ID"/>
+    <column xsi:type="varchar" name="cat_name" nullable="false" length="255" comment="Category Name"/>
+    <column xsi:type="smallint" name="cat_status" padding="6" unsigned="false" nullable="true" identity="false" comment="Category Status"/>
+    <column xsi:type="smallint" name="cat_parent" padding="6" unsigned="false" nullable="true" identity="false" comment="Category Parent"/>
+    <column xsi:type="varchar" name="cat_url_key" nullable="false" length="255" comment="Category URL key"/>
+    <column xsi:type="smallint" name="cat_sort_order" padding="6" unsigned="false" nullable="true" identity="false" comment="Category Sort Order"/>
+    <column xsi:type="varchar" name="cat_store_id" nullable="false" length="255" comment="Category Store ID"/>
+    <column xsi:type="mediumtext" name="cat_meta_title" nullable="false" comment="Category Meta Title"/>
+    <column xsi:type="mediumtext" name="cat_meta_keywords" nullable="false" comment="Category Meta Keywords"/>
+    <column xsi:type="mediumtext" name="cat_meta_description" nullable="false" comment="Category Meta Description"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="cat_id"/>
+    </constraint>
+  </table>
+</schema>

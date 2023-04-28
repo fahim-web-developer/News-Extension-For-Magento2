@@ -1,0 +1,94 @@
+{
+    "acme_fahimnews_post": {
+        "column": {
+            "newspost_id": true,
+            "title": true,
+            "url_key": true,
+            "content": true,
+            "short_content": true,
+            "image": true,
+            "source_edition": true,
+            "image_thumb": true,
+            "category": true,
+            "tags": true,
+            "meta_title": true,
+            "meta_keywords": true,
+            "meta_description": true,
+            "publish_date": true,
+            "is_active": true,
+            "created_at": true,
+            "update_time": true,
+            "views": true,
+            "store_id": true,
+            "type": true,
+            "parent_id": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "acme_fahimnews_comment": {
+        "column": {
+            "comment_id": true,
+            "newspost_id": true,
+            "comment": true,
+            "sender_name": true,
+            "sender_email": true,
+            "commented_date": true,
+            "comment_status": true
+        },
+        "index": {
+            "ACME_FAHIMNEWS_COMMENT_NEWSPOST_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_07E6B96E6E2DDDFAC75F1A802B2044AF": true
+        }
+    },
+    "acme_fahimnews_post_relatedproduct": {
+        "column": {
+            "newspost_id": true,
+            "related_id": true,
+            "position": true
+        },
+        "index": {
+            "ACME_FAHIMNEWS_POST_RELATEDPRODUCT_RELATED_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_9D13AA9087D0EF4D63DCA92A82FA221C": true,
+            "ACME_FAHIMNEWS_POST_RELATEDPRD_RELATED_ID_CAT_PRD_ENTT_ENTT_ID": true
+        }
+    },
+    "acme_fahimnews_post_relatedpost": {
+        "column": {
+            "newspost_id": true,
+            "related_id": true,
+            "position": true
+        },
+        "index": {
+            "ACME_FAHIMNEWS_POST_RELATEDPOST_RELATED_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_BED675EB2BC93734B146213C60B3CA02": true
+        }
+    },
+    "acme_fahimnews_category": {
+        "column": {
+            "cat_id": true,
+            "cat_name": true,
+            "cat_status": true,
+            "cat_parent": true,
+            "cat_url_key": true,
+            "cat_sort_order": true,
+            "cat_store_id": true,
+            "cat_meta_title": true,
+            "cat_meta_keywords": true,
+            "cat_meta_description": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    }
+}

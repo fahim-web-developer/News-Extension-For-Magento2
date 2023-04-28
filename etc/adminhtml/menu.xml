@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+   <menu>
+       <add id="Acme_FahimNews::fahimnews"
+           title="Fahim News" module="Acme_FahimNews"
+           sortOrder="10"
+           resource="Magento_Backend::content"
+           />
+          <add id="Acme_FahimNews::newspost" title="Posts" module="Acme_FahimNews" sortOrder="20"
+             resource="Acme_FahimNews::newspost" action="fahimnews/newspost" parent="Acme_FahimNews::fahimnews"/>
+        <add id="Acme_FahimNews::newscat" title="Categories" module="Acme_FahimNews" sortOrder="30"
+             resource="Acme_FahimNews::newscat" action="fahimnews/newscat" parent="Acme_FahimNews::fahimnews"/>
+        <add id="Acme_FahimNews::newscomment" title="Comments" module="Acme_FahimNews" sortOrder="30"
+             resource="Acme_FahimNews::newscomment" action="fahimnews/newscomment" parent="Acme_FahimNews::fahimnews"/>
+        <add id="Acme_FahimNews::settings" title="Settings" module="Acme_FahimNews" sortOrder="50"
+             resource="Acme_FahimNews::settings" action="adminhtml/system_config/edit/section/acme"
+             parent="Acme_FahimNews::fahimnews"/>
+   </menu>
+</config>

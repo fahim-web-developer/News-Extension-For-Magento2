@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etclayout_generic.xsd">
+    <container name="root" label="Root">
+        <block class="Acme\FahimNews\Block\Adminhtml\Newspost\Edit\Tab\RelatedProducts"
+               name="acme_fahimnews_relatedproducts"/>
+    </container>
+</layout>
